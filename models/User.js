@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../database/db');
+const Role = require('./Role')
 
 const User = sequelize.define("User", {
     username: {
@@ -15,6 +16,8 @@ const User = sequelize.define("User", {
     //Other moddel options go here
     tableName: 'users'
 });
+
+User.belongsTo(Role, {as: 'role'});
 
 (async () => {
     try {

@@ -12,16 +12,22 @@ module.exports = router
 
 // ROUTES //
 // create a user 
-router.post('/', async (req, res) => {
-    console.log('Creating user...')
-    res.status(200).send('User created!');
-})
-  
-// get all users
 
-// get a user 
+router.use(function(req, res, next) {
+    res.header(
+      "Access-Control-Allow-Headers",
+      "x-access-token, Origin, Content-Type, Accept"
+    );
+    next();
+  });
 
-// update a user
+router.post(
+    "/signup",
+    [
+        verifySignUp.checkDuplicateUsernameOrEmail,
+        verifySignUp.checkRolesExisted
+    ],
+    controller.signup
+);
 
-// delete a user (should only hide user from users)
-
+router.post("/signin", controller.signin);

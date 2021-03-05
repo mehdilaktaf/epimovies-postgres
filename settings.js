@@ -5,5 +5,7 @@ module.exports = Object.freeze({
     postgres_db: 'epimovies_psql',
     postgres_port: 5432,
     postgres_host: 'localhost',
-    server_port: 5000
+    server_port: 5000,
+    roles: ["user", "admin", "moderator"],
+    secret: "epimovies-secret-key"
 });
