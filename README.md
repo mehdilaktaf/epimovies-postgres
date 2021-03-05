@@ -22,10 +22,10 @@ You will also see any lint errors in the console.
 
 ## Documentation & Usage
 
-Now that your server is running you can explore our API.\
+Now that your server is running you can explore our API.
 
-**Note:\
-Most of the API will require you to be authenticated first. \
-You can create an account on this page [http://localhost:5000/auth/sign-up](http://localhost:5000/auth/sign-up).**
+**Note: Most of the API will require you to be authenticated first.** \
+
+First, create an account on this **[Sign-Up](http://localhost:5000/auth/sign-up).** page
 
 
