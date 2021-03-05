@@ -1,0 +1,26 @@
+{
+  "name": "epimovies-postgres",
+  "version": "1.0.0",
+  "description": "This server holds a REST API working with a PostgreSQL database.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mehdilaktaf/epimovies-postgres.git"
+  },
+  "author": "Mehdi Laktaf",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mehdilaktaf/epimovies-postgres/issues"
+  },
+  "homepage": "https://github.com/mehdilaktaf/epimovies-postgres#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "pg": "^8.5.1",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^6.5.0"
+  }
+}
