@@ -1,12 +1,12 @@
 # Getting started with Epimovies Server
 This server holds a REST API working with PostgreSQL and MongoDB databases.  
 
-This project was created using :\
-    - nodejs (https://github.com/nodejs/node)\
-    - express (https://github.com/expressjs/express)\
-    - sequelize (https://github.com/sequelize/sequelize)\
-    - postgres (https://github.com/postgres/postgres)\
-    - and more...
+This project was created using :   
+    - nodejs (https://github.com/nodejs/node)  
+    - express (https://github.com/expressjs/express)  
+    - sequelize (https://github.com/sequelize/sequelize)  
+    - postgres (https://github.com/postgres/postgres)  
+    - and more...  
 
 ## Starting the server
 
