@@ -26,6 +26,6 @@ Now that your server is running you can explore our API.
 
 **Note: Most of the API will require you to be authenticated first.** \
 
-First, create an account on this **[Sign-Up](http://localhost:5000/auth/sign-up).** page
+First, create an account on this **[Sign-Up](http://localhost:5000/auth/sign-up)** page
 
 
