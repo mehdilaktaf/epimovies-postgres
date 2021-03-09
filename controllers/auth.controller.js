@@ -1,6 +1,6 @@
 const Role = require('../models/Role');
 const User = require('../models/User');
-const {secret, roles} = require('../settings');
+const {secret} = require('../settings');
 
 // There are 2 main functions for Authentication:
 // - signup: create new User in database (role is user if not specifying role)
@@ -10,8 +10,8 @@ const {secret, roles} = require('../settings');
 //      * generate a token using jsonwebtoken
 //      * return user information & access Token
 
-var jwt = require("jsonwebtoken");
-var bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 exports.signup = (req, res) => {
   // Save User to Database

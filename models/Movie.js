@@ -1,22 +1,36 @@
-// const { DataTypes } = require('sequelize');
-// const db = require('../database/db');
+const { DataTypes } = require('sequelize');
+const sequelize = require('../database/db');
+const User = require('./User')
 
-// const Movie = db.define('Movie', {
-//     // Model attributes are defined here
-//     
-// }, {
-//     //Other moddel options go here
-//     tableName: 'movies'
-// });
+const Movie = sequelize.define('Movie', {
+    title: {
+        type: DataTypes.STRING
+    },
+    release_date: {
+        type: DataTypes.DATE
+    },
+    description: {
+        type: DataTypes.STRING
+    },
+    category: {
+        type: DataTypes.STRING
+    },
+    img_url: {
+        type: DataTypes.STRING
+    }
+}, {
+    //Other moddel options go here
+    tableName: 'movies'
+});
 
 
-// (async () => {
-//     try {
-//         await Movie.sync()
-//         console.log('Table was created successfully or already existed.');
-//     } catch (error) {
-//         console.error('Unable to connect to the database:', error);
-//     }
-// })();
+(async () => {
+    try {
+        await Movie.sync()
+        console.log(`Table '${Movie.tableName}' was created successfully or already existed.`);
+    } catch (error) {
+        console.error('Unable to connect to the database:', error);
+    }
+})();
 
-// module.exports = Movie
+module.exports = Movie
