@@ -1,19 +1,17 @@
-const Role = require('../models/Role');
 const Movie = require('../models/Movie');
 const User = require('../models/User');
-const {secret} = require('../settings');
 const { Op, Sequelize } = require("sequelize");
-const UserMovie = require('../models/UserMovie');
-const { sequelize } = require('../models/Role');
 
 // There are many functions for Movies:
 //  * create: create a new Movie in database 
 //  * update: update a Movie in database
 //  * allMovies: get all Movies in db (ordered by release_date)
-//  * movieById: get a Movie in db by its id
+//  * moviesById: get a Movies in db by its id
 //  * moviesByTitleOrCategory: get Movies in db by title or category
 //  * watch: add a Movie to UserMovies with currentUserId 
 //  * allSeenMovies: get all see Movies in db (ordered by views)
+//  * mostViewedMovies: get 10 most viewed Movies in db (ordered by views)
+
 
 exports.create = (req, res) => {
   Movie.create({
@@ -200,5 +198,5 @@ exports.mostViewedMovies = (req, res) => {
   .catch(err => {
     res.status(500).send({ message: err.message });
   });
-
 };
+
