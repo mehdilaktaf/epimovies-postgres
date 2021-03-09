@@ -11,7 +11,7 @@ const { sequelize } = require('../models/Role');
 //  * update: update a Movie in database
 //  * allMovies: get all Movies in db (ordered by release_date)
 //  * movieById: get a Movie in db by its id
-//  * moviesByTitle: get all Movies in db by its title
+//  * moviesByTitleOrCategory: get Movies in db by title or category
 //  * watch: add a Movie to UserMovies with currentUserId 
 //  * allSeenMovies: get all see Movies in db (ordered by views)
 
