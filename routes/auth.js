@@ -11,7 +11,6 @@ const router = new Router()
 module.exports = router
 
 // ROUTES //
-// create a user 
 
 router.use(function(req, res, next) {
     res.header(
@@ -21,6 +20,8 @@ router.use(function(req, res, next) {
     next();
   });
 
+  
+// create a user profile
 router.post(
     "/signup",
     [
@@ -30,4 +31,5 @@ router.post(
     controller.signup
 );
 
+// connect to a user profile
 router.post("/signin", controller.signin);

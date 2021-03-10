@@ -96,12 +96,12 @@ exports.moviesByTitleOrCategory = (req, res) => {
         [Op.or]: [
           { 
             title: {
-              [Op.iLike]: '%' + req.params.search + '%' 
+              [Op.iLike]: '%' + req.params.search_text + '%' 
             } 
           },
           { 
             category: {
-              [Op.iLike]: '%' + req.params.search + '%' 
+              [Op.iLike]: '%' + req.params.search_text + '%' 
             }
           }
         ]        

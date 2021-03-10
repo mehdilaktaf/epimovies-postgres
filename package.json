@@ -4,7 +4,8 @@
   "description": "This server holds a REST API working with a PostgreSQL database.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,8 @@
     "mongoose": "^5.11.19",
     "pg": "^8.5.1",
     "pg-hstore": "^2.3.3",
-    "sequelize": "^6.5.0"
+    "sequelize": "^6.5.0",
+    "swagger-jsdoc": "^6.0.0",
+    "swagger-ui-express": "^4.1.6"
   }
 }
