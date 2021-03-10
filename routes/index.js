@@ -11,4 +11,8 @@ module.exports = app => {
   });
   app.use('/api/movies', movies)
   app.use('/api/auth', auth)
+  // Home page redirects to api documentation
+  app.get('/', function(req, res){
+    res.redirect('/api-docs/')
+  })
 }
