@@ -1,9 +1,8 @@
 const mongoose = require('mongoose'); 
-
-const urlmongo = "mongodb+srv://epimovies_user:epimovies@cluster0.0gngv.mongodb.net/epimovies-mongo?retryWrites=true&w=majority";
+const settings = require('../settings');
 
 mongoose.connect(
-    urlmongo, 
+    settings.mongo_url, 
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,
