@@ -131,7 +131,7 @@ exports.watch = (req, res) => {
     .then(currentUser => {
       if(user == null){
         currentUser.addMovie(req.params.movieId);    
-        res.status(200).send({ message: `You just watched '${user.Movies[0].title}'` }); 
+        res.status(200).send(`You just watched a movie !`); 
       }
       else{
         // else give bad request code
