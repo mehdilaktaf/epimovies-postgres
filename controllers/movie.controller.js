@@ -1,5 +1,6 @@
 const Movie = require('../models/Movie');
 const User = require('../models/User');
+const UserMovie = require('../models/UserMovie');
 const { Op, Sequelize } = require("sequelize");
 
 // There are many functions for Movies:
@@ -165,6 +166,31 @@ exports.allSeenMovies = (req, res) => {
   })
   .then(movies => {
     res.status(200).send(movies);
+  })
+  .catch(err => {
+    res.status(500).send({ message: err.message });
+  });
+
+};
+
+
+exports.userSeenMovies = (req, res) => {
+  UserMovie.findAll({
+    where: { UserId: req.userId }
+  })
+  .then(user_movies => {
+    const movieIds = [];
+    user_movies.forEach(e => {
+      movieIds.push(e.MovieId)
+    });
+    Movie.findAll({
+      where: {
+        id : { [Op.in]: movieIds}
+      }
+    })
+    .then(seen_movies => {
+      res.status(200).send(seen_movies);
+    })
   })
   .catch(err => {
     res.status(500).send({ message: err.message });

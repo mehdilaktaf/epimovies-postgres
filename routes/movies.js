@@ -87,11 +87,35 @@ router.get(
     movie_controller.allMovies
     );
 
+   
+// get all ratings in db
+router.get(
+    '/ratings', 
+    [authJwt.verifyToken, authJwt.isModeratorOrAdmin],
+    rating_controller.allRatings
+    );
+
+
+// get all user ratings in db
+router.get(
+    '/rated', 
+    [authJwt.verifyToken],
+    rating_controller.userRatings
+    );
+
+
 // get all seen movies
 router.get(
     '/views', 
-    [authJwt.verifyToken],
+    [authJwt.verifyToken, authJwt.isModeratorOrAdmin],
     movie_controller.allSeenMovies
+    );
+
+// get all viewed movies
+router.get(
+    '/viewed', 
+    [authJwt.verifyToken],
+    movie_controller.userSeenMovies
     );
 
 // get 10 most viewed movies
@@ -122,13 +146,6 @@ router.get(
     rating_controller.ratingsByMovieId
     );
 
-// get all ratings in db
-router.get(
-    '/ratings', 
-    [authJwt.verifyToken, authJwt.isModeratorOrAdmin],
-    rating_controller.allRatings
-    );
-
 // get avg grade of a movie
 router.get(
     '/:movieId/avg_grade', 
@@ -138,8 +155,7 @@ router.get(
    
 // get 10 most rated movies
 router.get(
-    '/:movieId/ratings/top', 
+    '/ratings/top', 
     [authJwt.verifyToken],
     rating_controller.topRatedMovies
     );
-   
