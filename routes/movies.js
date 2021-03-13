@@ -34,7 +34,7 @@ router.post(
 // create a rating for a movie
 router.post(
     '/:movieId/ratings', 
-    [authJwt.verifyToken, authJwt.isModeratorOrAdmin],
+    [authJwt.verifyToken],
     rating_controller.create
     );
 
@@ -56,8 +56,7 @@ router.put(
     
 // update any rating
 router.put(
-    '/:movieId/ratings', 
-    // Only signed in mods and admins cann access this route
+    '/:movieId/ratings/:userId', 
     [authJwt.verifyToken, authJwt.isModeratorOrAdmin],
     rating_controller.updateAny
     );

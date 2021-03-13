@@ -40,19 +40,27 @@ exports.create = (req, res) => {
 
   
 exports.update = (req, res) => {
-    // Check if movie rating exists then modify it
+
+    var valid_fields = [];
+    var update = {}
+    // Filter non null fields 
+    if(req.body.grade)
+        valid_fields.push('grade');
+    if(req.body.rating_title)
+        valid_fields.push('rating_title');
+    if(req.body.comment)
+        valid_fields.push('comment');
+    
+    valid_fields.forEach(field => {
+        update[field] = req.body[field];
+    });
+
     Rating.findOneAndUpdate(
         {   
             userId: req.userId, 
             movieId: req.params.movieId
         },
-        {
-            grade: req.body.grade,
-            rating_title: req.body.rating_title,
-            comment: req.body.comment,
-            userId: req.userId,
-            movieId: req.params.movieId
-        },
+        update,
         {
             new: true
         })
@@ -69,18 +77,28 @@ exports.update = (req, res) => {
   };
   
   exports.updateAny = (req, res) => {
+
+    var valid_fields = [];
+    var update = {}
+    // Filter non null fields 
+    if(req.body.grade)
+        valid_fields.push('grade');
+    if(req.body.rating_title)
+        valid_fields.push('rating_title');
+    if(req.body.comment)
+        valid_fields.push('comment');
+    
+    valid_fields.forEach(field => {
+        update[field] = req.body[field];
+    });
+
     // Check if movie rating exists then modify it
     Rating.findOneAndUpdate(
         {   
+            userId: req.params.userId,
             movieId: req.params.movieId
         },
-        {
-            grade: req.body.grade,
-            rating_title: req.body.rating_title,
-            comment: req.body.comment,
-            userId: req.userId,
-            movieId: req.params.movieId
-        },
+        update,
         {
             new: true
         })

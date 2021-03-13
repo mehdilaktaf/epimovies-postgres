@@ -15,6 +15,8 @@ const { Op, Sequelize } = require("sequelize");
 
 
 exports.create = (req, res) => {
+  // Check if movie title already is in db 
+  // Then add movie to db
   Movie.create({
     title: req.body.title,
     release_date: req.body.release_date,
@@ -117,31 +119,65 @@ exports.moviesByTitleOrCategory = (req, res) => {
 };
 
 exports.watch = (req, res) => {
-  User.findOne({
-    where: {
-      id: req.userId,
-      '$Movies.id$': req.params.movieId
-    },
-    include: {
-      model: Movie
-    }
+  const movieIds = [];
+  // NEW
+  UserMovie.findAll({
+    where: { UserId: req.userId}
   })
-  .then(user=>{
-    User.findByPk(req.userId)
-    .then(currentUser => {
-      if(user == null){
-        currentUser.addMovie(req.params.movieId);    
-        res.status(200).send(`You just watched a movie !`); 
-      }
-      else{
-        // else give bad request code
-        res.status(400).send({ message: `You have already seen '${user.Movies[0].title}' !` });
-      }
-    })
+  .then(user_movies => {
+    const selected_movie = user_movies.filter(movie => movie.MovieId == req.params.movieId)
+    // If movie isnt already in the list, add it 
+    if (selected_movie != []){
+      User.findByPk(req.userId)
+      .then(currentUser => {
+        currentUser.addMovie(req.params.movieId); 
+        movieIds.push(req.params.movieId);
+        console.log(movieIds + req.params.movieId);
+
+        user_movies.forEach(e => {
+          movieIds.push(e.MovieId)
+        });
+        Movie.findAll({
+          where: {
+            id : { [Op.in]: movieIds}
+          }
+        })
+        .then(seen_movies => {
+          res.status(200).send(seen_movies);
+        })
+      })
+    }    
   })
   .catch(err => {
-    res.status(500).send({ message: err.message })
+    res.status(500).send({ message: err.message });
   });
+
+  // OLD 
+  // User.findOne({
+  //   where: {
+  //     id: req.userId,
+  //     '$Movies.id$': req.params.movieId
+  //   },
+  //   include: {
+  //     model: Movie
+  //   }
+  // })
+  // .then(user=>{
+  //   User.findByPk(req.userId)
+  //   .then(currentUser => {
+  //     if(user == null){
+  //       currentUser.addMovie(req.params.movieId);    
+  //       res.status(200).send(`You just watched a movie !`); 
+  //     }
+  //     else{
+  //       // else give bad request code
+  //       res.status(400).send({ message: `You have already seen '${user.Movies[0].title}' !` });
+  //     }
+  //   })
+  // })
+  // .catch(err => {
+  //   res.status(500).send({ message: err.message })
+  // });
 
 };
 

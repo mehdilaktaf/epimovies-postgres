@@ -69,7 +69,7 @@ const Movie = sequelize.define('Movie', {
         type: DataTypes.DATE
     },
     description: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING(2000)
     },
     category: {
         type: DataTypes.STRING
