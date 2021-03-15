@@ -192,15 +192,23 @@ exports.topRatedMovies = (req, res) => {
                   }
             });
             Movie.findAll({
-                where: {
-                  id: {
-                    [Op.in]: movieIds
-                  }  
+                where:{
+                    id: {
+                        [Op.in]: movieIds
+                    }
                 }
-              })
-              .then(movies => {
-                res.status(200).send(movies);
-              })
+            })
+            .then(movies => {
+                // Sort back to movieIds order 
+                var new_movies = []
+                movieIds.forEach(movieId => {
+                    movies.forEach(movie => { 
+                        if(movieId == movie.id)
+                            new_movies.push(movie)
+                    })
+                })
+                res.status(200).send(new_movies);      
+            })
         } else {
             res.status(404).send({ message: 'No ratings found !' });
         }
