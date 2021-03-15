@@ -1,7 +1,11 @@
 const Movie = require('../models/Movie');
 const User = require('../models/User');
 const UserMovie = require('../models/UserMovie');
+const OrderModel = require('../models/OrderModel');
 const { Op, Sequelize } = require("sequelize");
+
+const sequelize = require('../database/sequelize');
+const { models } = require('../database/mongo');
 
 // There are many functions for Movies:
 //  * create: create a new Movie in database 
@@ -84,9 +88,14 @@ exports.allMovies = (req, res) => {
 };
 
 exports.movieById = (req, res) => {
-  Movie.findByPk(req.params.id)
+  Movie.findByPk(req.params.movieId)
     .then(movie => {
-      res.status(200).send(movie);
+      if(movie){
+        res.status(200).send(movie);
+      }
+      else{
+        res.status(404).send('Movie Not Found');
+      }
     })
     .catch(err => {
       res.status(500).send({ message: err.message });
@@ -94,21 +103,28 @@ exports.movieById = (req, res) => {
 };
 
 exports.moviesByTitleOrCategory = (req, res) => {
+  var query = req.params.search_text;
+  if(req.params.search_text == "$-*empty*-$")
+    query = "";
+  console.log(query)
   Movie.findAll({
       where: {
         [Op.or]: [
           { 
             title: {
-              [Op.iLike]: '%' + req.params.search_text + '%' 
+              [Op.iLike]: '%' + query + '%' 
             } 
           },
           { 
             category: {
-              [Op.iLike]: '%' + req.params.search_text + '%' 
+              [Op.iLike]: '%' + query + '%' 
             }
           }
         ]        
-      }
+      },
+      order: [
+        ['release_date', 'DESC']
+      ]
     })
     .then(movies => {
       res.status(200).send(movies);
@@ -138,9 +154,31 @@ exports.watch = (req, res) => {
           movieIds.push(e.MovieId)
         });
         Movie.findAll({
+          include: { 
+            model: User,
+            as: 'viewers',
+            through: {
+              attributes: [],
+              where: {
+                UserId: req.userId
+              }
+            }
+          },
+          attributes: [
+            "title",
+            "release_date",
+            "description",
+            "category",
+            "img_url",
+            [Sequelize.col("viewers.UserMovie.createdAt"), "view_date"],
+          ],
           where: {
-            id : { [Op.in]: movieIds}
-          }
+            id:{
+                [Op.in]: movieIds
+            }
+          },
+          order: [Sequelize.literal("view_date DESC")]
+    
         })
         .then(seen_movies => {
           res.status(200).send(seen_movies);
@@ -151,33 +189,6 @@ exports.watch = (req, res) => {
   .catch(err => {
     res.status(500).send({ message: err.message });
   });
-
-  // OLD 
-  // User.findOne({
-  //   where: {
-  //     id: req.userId,
-  //     '$Movies.id$': req.params.movieId
-  //   },
-  //   include: {
-  //     model: Movie
-  //   }
-  // })
-  // .then(user=>{
-  //   User.findByPk(req.userId)
-  //   .then(currentUser => {
-  //     if(user == null){
-  //       currentUser.addMovie(req.params.movieId);    
-  //       res.status(200).send(`You just watched a movie !`); 
-  //     }
-  //     else{
-  //       // else give bad request code
-  //       res.status(400).send({ message: `You have already seen '${user.Movies[0].title}' !` });
-  //     }
-  //   })
-  // })
-  // .catch(err => {
-  //   res.status(500).send({ message: err.message })
-  // });
 
 };
 
@@ -220,10 +231,32 @@ exports.userSeenMovies = (req, res) => {
       movieIds.push(e.MovieId)
     });
     Movie.findAll({
+      include: { 
+        model: User,
+        as: 'viewers',
+        through: {
+          attributes: [],
+          where: {
+            UserId: req.userId
+          }
+        }
+      },
+      attributes: [
+        "title",
+        "release_date",
+        "description",
+        "category",
+        "img_url",
+        [Sequelize.col("viewers.UserMovie.createdAt"), "view_date"],
+      ],
       where: {
-        id : { [Op.in]: movieIds}
-      }
-    })
+        id:{
+            [Op.in]: movieIds
+        }
+      },
+      order: [Sequelize.literal("view_date DESC")]
+
+    }) 
     .then(seen_movies => {
       res.status(200).send(seen_movies);
     })

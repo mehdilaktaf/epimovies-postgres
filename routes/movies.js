@@ -131,6 +131,7 @@ router.get(
     movie_controller.moviesByTitleOrCategory
     );
 
+
 // get a movie 
 router.get(
     '/:movieId', 

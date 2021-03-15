@@ -166,7 +166,7 @@ exports.avgGrade = (req, res) => {
     .group({ _id: '$movieId', avg: {$avg: '$grade'}})
     .then(ratings => {
         if(ratings){
-            res.status(200).send(ratings);
+            res.status(200).send(ratings[0]);
         } else {
             res.status(404).send({ message: 'This movie rating does not exist !' });
         }

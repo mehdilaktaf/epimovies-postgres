@@ -1,6 +1,4 @@
-const { DataTypes } = require('sequelize');
 const sequelize = require('../database/sequelize');
-const mongo = require('../database/mongo');
 const User = require('./User')
 const Movie = require('./Movie')
 
@@ -11,7 +9,7 @@ const UserMovie = sequelize.define('UserMovie', {
 });
 
 // Create UserMovie Table (many-to-many association)
-Movie.belongsToMany(User, {through: 'UserMovie'});
+Movie.belongsToMany(User, {as: 'viewers', through: 'UserMovie'});
 User.belongsToMany(Movie, {through: 'UserMovie'});
 
 (async () => {
