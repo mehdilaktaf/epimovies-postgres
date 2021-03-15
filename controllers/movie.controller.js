@@ -198,7 +198,8 @@ exports.allSeenMovies = (req, res) => {
     group: ["Movie.id"],
     includeIgnoreAttributes:false,
     include: [{
-        model: User
+        model: User,
+        as: 'viewers'
     }],
     attributes: [
         "title",
@@ -206,7 +207,7 @@ exports.allSeenMovies = (req, res) => {
         "description",
         "category",
         "img_url",
-        [Sequelize.fn("COUNT", Sequelize.col("Users.id")), "views"],
+        [Sequelize.fn("COUNT", Sequelize.col("viewers.id")), "views"],
     ],
     order: [[Sequelize.literal("views"), "DESC"]]
   })
@@ -272,7 +273,8 @@ exports.mostViewedMovies = (req, res) => {
     group: ["Movie.id"],
     includeIgnoreAttributes:false,
     include: [{
-        model: User
+        model: User,
+        as: 'viewers'
     }],
     attributes: [
         "title",
@@ -280,7 +282,7 @@ exports.mostViewedMovies = (req, res) => {
         "description",
         "category",
         "img_url",
-        [Sequelize.fn("COUNT", Sequelize.col("Users.id")), "views"],
+        [Sequelize.fn("COUNT", Sequelize.col("viewers.id")), "views"],
     ],
     order: [[Sequelize.literal("views"), "DESC"]]
     
