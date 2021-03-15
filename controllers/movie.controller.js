@@ -1,7 +1,6 @@
 const Movie = require('../models/Movie');
 const User = require('../models/User');
 const UserMovie = require('../models/UserMovie');
-const OrderModel = require('../models/OrderModel');
 const { Op, Sequelize } = require("sequelize");
 
 const sequelize = require('../database/sequelize');
