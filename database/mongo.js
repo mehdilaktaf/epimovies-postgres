@@ -4,6 +4,18 @@ const settings = require('../settings');
 mongoose.connect(
     settings.mongo_url, 
     {
+        server: { 
+            socketOptions: { 
+                keepAlive: 300000, 
+                connectTimeoutMS: 30000 
+        } 
+        }, 
+        replset: { 
+            socketOptions: { 
+                keepAlive: 300000, 
+                connectTimeoutMS : 30000 
+        } 
+        },
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useCreateIndex: true,
