@@ -28,12 +28,12 @@ const User = require('./User')
  *       createdAt:
  *         type: string
  *         format: date
- *         description: Creation date of the movie
+ *         description: The auto-generated creation date of the movie
  *         example: 2021-03-10 12:00:00
  *       updatedAt:
  *         type: string
  *         format: date
- *         description: Last update date of the movie
+ *         description: The auto-generated last update date of the movie
  *         example: 2021-03-10 15:43:00
  *   MovieRequest:
  *     properties:
@@ -50,16 +50,6 @@ const User = require('./User')
  *         type: string
  *         description: The description of the movie
  *         example: After defeating the MUTOs, the king of monsters is back...
- *       createdAt:
- *         type: string
- *         format: date
- *         description: Creation date of the movie
- *         example: 2021-03-10 12:00:00
- *       updatedAt:
- *         type: string
- *         format: date
- *         description: Last update date of the movie
- *         example: 2021-03-10 15:43:00
  */
 const Movie = sequelize.define('Movie', {
     title: {

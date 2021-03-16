@@ -8,13 +8,29 @@ const app =  express();
 const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerOptions = {
-    swaggerDefinition: {
+    swaggerDefinition: {  
+      swagger: "2.0",
       info: {
-        title: "Movies API",
+        title: "EpiMovies API",
         version: '1.0.0',
+        description:
+        "A simple movie library project to understand web APIs and Front-End Development."
       },
     },
     apis: ["./routes/*.js", "./models/*.js"],
+    components: {
+      securitySchemes: {
+        jwt: {
+          type: "apiKey",
+          in: "header",
+          name: "X-Access-Token"
+        },
+      }
+    }
+    ,
+    security: [{
+      jwt: []
+    }],
   };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
