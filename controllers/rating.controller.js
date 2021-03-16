@@ -127,26 +127,26 @@ exports.update = (req, res) => {
 
   
 exports.userRatings = (req, res) => {
-// Get all ratings user wrote
-Rating.find({
-    where: {userId: req.userId}
-})
-.then(ratings => {
-    if(ratings){
-        res.status(200).send(ratings);
-    } else {
-        res.status(404).send({ message: 'This movie rating does not exist !' });
-    }
-})
-.catch(err => {
-    res.status(500).send({ message: err.message });
-});
-};
+    // Get all ratings user wrote
+    Rating.find({userId: req.userId})
+    .then(ratings => {
+        if(ratings){
+            res.status(200).send(ratings);
+        } else {
+            res.status(404).send({ message: 'This movie rating does not exist !' });
+        }
+    })
+    .catch(err => {
+        res.status(500).send({ message: err.message });
+    });
+    };
 
 
 exports.ratingsByMovieId = (req, res) => {
     // Get ratings of a movie
-    Rating.find({movieId: req.params.movieId})
+    Rating.find({
+        movieId: parseInt(req.params.movieId)
+    })
     .then(ratings => {
         if(ratings){
             res.status(200).send(ratings);
